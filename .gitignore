@@ -1,0 +1,4 @@
+bin/
+calc
+.DS_Store
+coverage.out

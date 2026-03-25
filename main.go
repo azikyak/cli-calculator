@@ -283,6 +283,7 @@ func printUsage() {
 	fmt.Println("  go run main.go 10 / ( 2 + 3 )")
 	fmt.Println("  go run main.go")
 	fmt.Println("")
+	fmt.Println("Interaktiv rejimda terminalni tozalash uchun: clear")
 	fmt.Println("Interaktiv rejimdan chiqish uchun: exit yoki quit")
 }
 
@@ -290,7 +291,7 @@ func interactiveMode() {
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("CLI Calculator interaktiv rejimi")
-	fmt.Println("Ifoda kiriting. Chiqish uchun 'exit' yoki 'quit' yozing.")
+	fmt.Println("Ifoda kiriting, `exit` yoki `quit` chiqadi.")
 
 	for {
 		fmt.Print("calc> ")
