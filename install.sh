@@ -4,7 +4,6 @@ set -eu
 
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 APP_NAME=${APP_NAME:-calc}
-MAIN_FILE=${MAIN_FILE:-main.go}
 BUILD_DIR=${BUILD_DIR:-"$SCRIPT_DIR/bin"}
 DEFAULT_PREFIX=/usr/local/bin
 TARGET_DIR=${PREFIX:-$DEFAULT_PREFIX}
@@ -25,12 +24,12 @@ can_write_to_dir() {
 if [ "${1:-}" = "--help" ]; then
     printf '%s\n' \
         "Usage: PREFIX=/custom/bin ./install.sh" \
-        "Builds the calculator and installs it as ${APP_NAME}."
+        "Builds the calculator module and installs it as ${APP_NAME}."
     exit 0
 fi
 
-if [ ! -f "$SCRIPT_DIR/$MAIN_FILE" ]; then
-    printf 'main file topilmadi: %s\n' "$SCRIPT_DIR/$MAIN_FILE" >&2
+if [ ! -f "$SCRIPT_DIR/go.mod" ]; then
+    printf 'go.mod topilmadi: %s/go.mod\n' "$SCRIPT_DIR" >&2
     exit 1
 fi
 
@@ -46,7 +45,10 @@ fi
 
 mkdir -p "$BUILD_DIR" "$TARGET_DIR"
 
-go build -o "$BINARY_PATH" "$SCRIPT_DIR/$MAIN_FILE"
+(
+    cd "$SCRIPT_DIR"
+    go build -o "$BINARY_PATH" .
+)
 install -m 0755 "$BINARY_PATH" "$TARGET_DIR/$APP_NAME"
 
 printf 'installed: %s\n' "$TARGET_DIR/$APP_NAME"

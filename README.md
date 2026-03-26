@@ -11,11 +11,13 @@ Oddiy, lekin amaliy terminal kalkulyator. Dastur matematik ifodani qabul qiladi,
 - interaktiv rejim
 - command line argument orqali ishlatish
 - noto'g'ri input uchun tushunarli xatoliklar
+- macOS, Linux va Windows uchun build/install oqimi
 
 ## Talablar
 
 - Go 1.20+
 - `make` ixtiyoriy, lekin qulay
+- Windows uchun PowerShell tavsiya qilinadi
 
 ## Loyiha Tuzilishi
 
@@ -23,6 +25,8 @@ Oddiy, lekin amaliy terminal kalkulyator. Dastur matematik ifodani qabul qiladi,
 cli-calculator/
 ├── Makefile
 ├── README.md
+├── go.mod
+├── install.ps1
 ├── install.sh
 ├── main.go
 └── .gitignore
@@ -36,18 +40,24 @@ Loyiha papkasiga kiring:
 cd cli-calculator
 ```
 
+Windows PowerShell:
+
+```powershell
+cd .\cli-calculator
+```
+
 To'g'ridan-to'g'ri `go run` bilan:
 
 ```bash
-go run main.go "2+3*4"
-go run main.go "10 / (2 + 3)"
-go run main.go "-(4+6)/2"
+go run . "2+3*4"
+go run . "10 / (2 + 3)"
+go run . "-(4+6)/2"
 ```
 
 Interaktiv rejim:
 
 ```bash
-go run main.go
+go run .
 ```
 
 Keyin terminalda ifoda kiriting:
@@ -77,13 +87,20 @@ make clean
 `make build` dan keyin binary shu yerda bo'ladi:
 
 ```text
-bin/calc
+macOS/Linux: bin/calc
+Windows:     bin/calc.exe
 ```
 
 Uni qo'lda ham ishlatish mumkin:
 
 ```bash
 ./bin/calc "7*(3-1)"
+```
+
+Windows PowerShell:
+
+```powershell
+.\bin\calc.exe "7*(3-1)"
 ```
 
 ## Install
@@ -94,12 +111,21 @@ Default install:
 make install
 ```
 
-Agar `/usr/local/bin` ga yozish huquqi bo'lmasa, install script avtomatik ravishda `~/.local/bin` ga fallback qiladi.
+OS bo'yicha default install joylari:
 
-Yoki script orqali:
+- macOS/Linux: `/usr/local/bin`, agar yozish huquqi bo'lmasa `~/.local/bin`
+- Windows: `%USERPROFILE%\AppData\Local\Programs\cli-calculator\bin`
+
+Unix shell orqali:
 
 ```bash
 ./install.sh
+```
+
+Windows PowerShell orqali:
+
+```powershell
+.\install.ps1
 ```
 
 Agar boshqa joyga o'rnatmoqchi bo'lsangiz:
@@ -112,6 +138,12 @@ yoki:
 
 ```bash
 make install PREFIX=$HOME/.local/bin
+```
+
+Windows PowerShell:
+
+```powershell
+.\install.ps1 -Prefix "$HOME\AppData\Local\Microsoft\WindowsApps"
 ```
 
 Agar `PATH` ichida bo'lsa, keyin shunday ishlaydi:
